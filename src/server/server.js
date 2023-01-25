@@ -5,6 +5,8 @@ const app = express();
 require("dotenv").config();
 const { PORT = 8080 } = process.env;
 
+// Server
+
 app.use(express.static(path.join(__dirname, "..", "client")));
 app.use(express.json());
 
