@@ -13,25 +13,22 @@
     </head>
     <body>
         <div id="main">
-      
             <div class="gallery">
-             
-
-            
             </div>
-          
-             
                 <form v-on:submit="handleSubmit" class="form">
-                     <h2>Regitration Form</h2>
+                     <h2>Publisher Latest upload</h2>
                     <div>
-                        <span>Title: </span><input type="text" name="title" v-model="title">
-                        <span>Username: </span><input type="text" name="username" v-model="username">
-                        <span>Description: </span><input type="text" name="description" v-model="description">
+                        <span>SEARCH:</span><input type="text" name="search" v-model="search"><br>
+                        <span>PUBLISHER: </span><input type="text" name="username" v-model="username"><br>
+                        <span>AUTHOR: </span><input type="text" name="title" v-model="title"><br>
+                        <span>DESCRIPTION: </span><input type="text" name="description" v-model="description">
                     </div>
                     <div>
-                        <span>File: </span><input v-bind:class="btn" type="file" name="file" accept="image/*" v-on:change="handleFileChange">
+                        <span>File: </span><input v-bind:class="btn" type="file" name="filename" accept="image/*" v-on:change="handleFileChange">
                     </div>
-                    <button v-bind:class="btn">Register</button>
+                    <button v-bind:class="btnOn">Submit</button>
+                    <button v-bind:class="onClick">Add books</button>
+                    
                 </form>
             </div>
         </div>
