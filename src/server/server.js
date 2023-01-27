@@ -7,6 +7,7 @@ const {
     addpublisher,
     addBooks,
     getAllbooks,
+    getBooksById,
 } = require("./db");
 const app = express();
 require("dotenv").config();
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 
 app.post("/books_w_publishers", (req, res) => {
     const { publisher, author, description } = req.body;
+    console.log(req.body);
     addpublisher(publisher, author, description)
         .then((data) => {
             res.json(data);
@@ -37,35 +39,43 @@ app.post("/books_w_publishers", (req, res) => {
         });
 });
 
-// app.post("/api/addbooks", (req, res) => {
-//     const { url, title, description } = req.body;
-//     addBooks(url, username, title, description)
-//         .then((data) => {
-//             res.json(data);
-//         })
-//         .catch((error) => {
-//             console.log(error);
-//             res.statusCode = 500;
-//             res.json({ success: false });
-//         });
-// });
+app.post("/addbooks", uploader.single("filename"), (req, res) => {
+    console.log(req.body);
+    const { title, publisher_id, description } = req.body;
 
-//uploader.single("file"),
-app.post("/uplaoder", uploader.single("file"), (req, res) => {
-    const { url, username, title, description } = req.body;
-    const imgurl = req.file.filename;
-    addpublisher(imgurl, username, title, description)
+    const url = "/" + req.file.filename;
+    console.log("req.file ", req.file);
+    addBooks(url, title, publisher_id, description)
         .then((data) => {
+            console.log("data addbooks", data);
             res.json(data);
         })
         .catch((error) => {
             console.log(error);
             res.statusCode = 500;
+            res.json({ success: false });
         });
 });
 
-// app.get("/api/books_w_publishers", (req, res) => {
-//     getConnections(req.params.id)
+app.get("/imagebook", (req, res) => {
+    console.log(req.query);
+    getAllbooks()
+        .then((data) => {
+            console.log("data", data);
+            res.json({ data: data.rows, success: true });
+        })
+        .catch((error) => {
+            console.log("error", error);
+            res.json({ success: false });
+        });
+});
+
+//uploader.single("file"),
+
+// app.get("/add-image", uploader.single("file"), (req, res) => {
+//     const { title, description } = req.body;
+//     const url = "/" + req.file.filename;
+//     addBooks(url, title, description) //description
 //         .then((rows) => {
 //             res.json({ success: true, data: rows });
 //         })
@@ -74,15 +84,5 @@ app.post("/uplaoder", uploader.single("file"), (req, res) => {
 //             res.json({ success: false });
 //         });
 // });
-app.get("/books_w_publishers", (req, res) => {
-    getConnections()
-        .then((rows) => {
-            res.json({ success: true, data: rows });
-        })
-        .catch(() => {
-            res.statusCode = 500;
-            res.json({ success: false });
-        });
-});
 
 app.listen(PORT, () => console.log(`I'm listening on port ${PORT}`));

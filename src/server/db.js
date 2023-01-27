@@ -14,11 +14,11 @@ const getAllfrmpublisher = () => {
     return db.query(`SELECT * FROM publisher`);
 };
 
-const addBooks = (url, title, description) => {
+const addBooks = (url, title, publisher_id, description) => {
     return db.query(
-        `INSERT INTO books (url, title, description) 
-    VALUES($1, $2, $3) RETURNING *;`,
-        [url, title, description]
+        `INSERT INTO books (url, title, publisher_id, description) 
+    VALUES($1, $2, $3, $4) RETURNING *;`,
+        [url, title, publisher_id, description]
     );
 };
 const addpublisher = (publisher, author, description) => {
@@ -26,6 +26,22 @@ const addpublisher = (publisher, author, description) => {
         `INSERT INTO publisher (publisher, author, description)
     VALUES($1, $2, $3)RETURNING *;`,
         [publisher, author, description]
+    );
+};
+
+const getImageById = (imageId) => {
+    return db.query(
+        `SELECT * FROM books
+        WHERE id = $1;`,
+        [imageId]
+    );
+};
+
+const getBooksById = (id) => {
+    return db.query(
+        `SELECT * FROM books
+        WHERE id = $1;`,
+        [id]
     );
 };
 
@@ -62,4 +78,5 @@ module.exports = {
     addBooks,
     getAllbooks,
     getConnections,
+    getBooksById,
 };

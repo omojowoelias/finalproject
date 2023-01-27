@@ -7,8 +7,6 @@ export const modalComponent = {
             <p>{{image.title}}</p>
             <p>{{image.description}}</p>
             <p>Created at {{image.created_at}}</p>
-            <comments v-bind:id="id"></comments>
-            <button v-on:click="handleClose">close</button>
         </div>
     `,
     props: ["id"],

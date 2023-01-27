@@ -66,7 +66,6 @@ INSERT INTO publisher (publisher, author, description) VALUES (
 
 
 
-
 INSERT INTO books (url, title, publisher_id, description) VALUES (
     'https://m.media-amazon.com/images/I/51cjQIWDy8L._SX331_BO1,204,203,200_.jpg',
     'Geoff Eley',
@@ -101,3 +100,7 @@ INSERT INTO books (url, title, publisher_id, description) VALUES (
     5,
     'That was how I learned that the world changes between heartbeats; that life is never an absolute, but always a wager.'
 );
+
+
+
+
