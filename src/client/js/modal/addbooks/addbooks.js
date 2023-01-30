@@ -1,4 +1,4 @@
-const modalComponents = {
+const addBookModal = {
     template: `
     <div class="addbooks">
         <form v-on:submit="handleSubmit" class="addbooks">
@@ -7,24 +7,26 @@ const modalComponents = {
                     <span>Title: </span><input type="text" name="title" v-model="title"><br>
                     <span>Publisher_ID: </span><input type="text" name="publisher_id" v-model="publisher_id"><br>
                     <span>DESCRIPTION: </span><input type="text" name="description" v-model="description">
-                     <button class="onClick">Submit</button>
+                    <span>Upload File: </span><input class="btn" type="file" name="filename" accept="image/*" v-on:change="handleFileChange">
+                    <button class="onClick">Submit</button>
                 </div>
                 <div>
-                    <span>Upload File: </span><input class="btn" type="file" name="filename" accept="image/*" v-on:change="handleFileChange">
                 </div>
             </form>
     </div>
     `,
-    //props: ["id"],
     data: () => {
         return {
             file: null,
             title: "",
             description: "",
-            publiser_id: "",
+            publisher_id: "",
         };
     },
     methods: {
+        handleFileChange: function (evt) {
+            this.file = evt.target.files[0];
+        },
         handleSubmit: function (evt) {
             console.log(evt);
             console.log("clicked");
@@ -33,11 +35,11 @@ const modalComponents = {
             console.log("Title: ", this.title);
             formData.append("file", this.file);
             formData.append("title", this.title);
-            formData.append("publisher_id", this.publiser_id);
+            formData.append("publisher_id", this.publisher_id);
             formData.append("description", this.description);
             fetch(`/addbooks`, {
                 method: "POST",
-                body: new FormData(evt.target),
+                body: formData,
             })
                 .then((res) => res.json())
                 .then((data) => {
@@ -58,4 +60,4 @@ const modalComponents = {
     },
 };
 
-export { modalComponents };
+export { addBookModal };

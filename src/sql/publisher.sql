@@ -100,6 +100,18 @@ INSERT INTO books (url, title, publisher_id, description) VALUES (
     5,
     'That was how I learned that the world changes between heartbeats; that life is never an absolute, but always a wager.'
 );
+INSERT INTO books (url, title, publisher_id, description) VALUES (
+    'https://m.media-amazon.com/images/I/41HWwIbhSkL._AC_SF480,480_.jpg',
+    'Thibaut Meurisse',
+    6,
+    'A happier life is possible if you follow the steps.'
+);
+INSERT INTO books (url, title, publisher_id, description) VALUES (
+    'https://m.media-amazon.com/images/I/71iZi2LqK8L._AC_UL320_.jpg',
+    'Brinna wWiest',
+    7,
+    'No matter your goals, this book offers a proven framework for improving--every day.'
+);
 
 
 

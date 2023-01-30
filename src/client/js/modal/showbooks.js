@@ -1,32 +1,27 @@
-import { AlexaForBusiness } from "aws-sdk";
-
-const modalComponent = {
+const showBookComponent = {
     template: `
     <div  class="showbooks">
-                 <h2>List Of Books</h2>
-                 <img v-bind:src="books.url">
-                 <p>{{books.title}}</p>
-                 <p>{{books.description}}</p>
-               
+        <h2>Information about book</h2>
+        <img v-bind:src="book.url">
+        <h3>{{book.url}}</h3>
+        <p>{{book.title}}</p>
+        <p>{{book.description}}</p>
     </div>
     `,
     //props: ["id"],
     data: () => {
         return {
-            books: [],
+            book: {},
         };
     },
-    methods: {},
-    mounted() {
-        fetch(`/imagebook`)
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                this.books = data;
-            });
+    methods: {
+        showDetailsBookModal(id) {
+            this.showDetailsBookModal = id;
+        },
     },
+    props: ["id"],
 };
-export { modalComponent };
+export { showBookComponent };
 
 // getAllbooks: function () {
 //     var app = this;

@@ -1,14 +1,7 @@
 const path = require("path");
 const express = require("express");
 const { uploader, fileUpload } = require("./file-uploads");
-const {
-    getAllfrmpublisher,
-    getConnections,
-    addpublisher,
-    addBooks,
-    getAllbooks,
-    getBooksById,
-} = require("./db");
+const { addpublisher, addBooks, getAllbooks, getBooksById } = require("./db");
 const app = express();
 require("dotenv").config();
 const { PORT = 8080 } = process.env;
@@ -39,11 +32,12 @@ app.post("/books_w_publishers", (req, res) => {
         });
 });
 
-app.post("/addbooks", uploader.single("filename"), (req, res) => {
+app.post("/addbooks", uploader.single("file"), (req, res) => {
     console.log(req.body);
     const { title, publisher_id, description } = req.body;
 
-    const url = "/" + req.file.filename;
+    const url = req.file.filename;
+    console.log(url);
     console.log("req.file ", req.file);
     addBooks(url, title, publisher_id, description)
         .then((data) => {
@@ -70,8 +64,20 @@ app.get("/imagebook", (req, res) => {
         });
 });
 
-//uploader.single("file"),
+app.get("/addbook/:id", (req, res) => {
+    console.log(req.query);
+    getBooksById()
+        .then((data) => {
+            console.log("data", data);
+            res.json({ data: data.rows, success: true });
+        })
+        .catch((error) => {
+            console.log("error", error);
+            res.json({ success: false });
+        });
+});
 
+//uploader.single("file"),
 // app.get("/add-image", uploader.single("file"), (req, res) => {
 //     const { title, description } = req.body;
 //     const url = "/" + req.file.filename;

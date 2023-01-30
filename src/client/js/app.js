@@ -1,19 +1,28 @@
 import * as Vue from "./vue.js";
-import { modalComponents } from "./modal/addbooks/addbooks.js";
-import { modalComponent } from "../modal/showbooks";
+import { addBookModal } from "./modal/addbooks/addbooks.js";
+import { showBookComponent } from "./modal/showbooks.js";
+// import { addBookModal } from "./modal/showbooks";
 
 Vue.createApp({
     components: {
-        "modal-component": modalComponents,
+        "add-book-modal": addBookModal,
+        "show-book-modal": showBookComponent,
     },
     data: () => {
         return {
             file: null,
             title: "",
+            url: "",
             username: "",
             description: "",
+            author: "",
+            publisher: "",
             publishe_id: "",
             search: "",
+            books: [],
+            showAddBookModal: false,
+            showBookComponent: false,
+            showDetailsBookModal: null,
         };
     },
     methods: {
@@ -34,14 +43,37 @@ Vue.createApp({
             //     body: formData,
             // });
         },
+        handleAddModal() {
+            this.showAddBookModal = true;
+        },
+        openModal(book) {
+            console.log(book);
+            // do something here with selected book
+            this.selectedBook = true;
+            this.showDetailsBookModal = true;
+        },
         btnOn() {
+            const formData = new FormData();
+            //formData.append();
+            formData.append("file", this.file);
+            formData.append("title", this.title);
+            formData.append("publisher_id", this.publiser_id);
+            formData.append("description", this.description);
+
             fetch("/addbooks", {
                 method: "POST",
                 body: formData,
             });
         },
+        // onClick() {
+        //     const formData = newFormData();
+        //     formData.append("");
+        // },
         handleFileChange(event) {
             this.file = event.target.file[0];
+        },
+        showDetailsBookModal(id) {
+            this.showDetailsBookModal = id;
         },
     },
 
@@ -51,15 +83,16 @@ Vue.createApp({
     },
     created() {
         console.log("Vue app was created");
-        // mounted() {
-        //     console.log("Vue app was mounted");
-        //     fetch("/images")
-        //         .then((res) => {
-        //             return res.json();
-        //         })
-        //         .then((data) => {
-        //             console.log("data from server: ", data);
-        //             this.images = data;
-        //         });
+    },
+    mounted() {
+        console.log("Vue app was mounted");
+        fetch("/imagebook")
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log("data from server: ", data);
+                this.books = data.data;
+            });
     },
 }).mount("#main");
